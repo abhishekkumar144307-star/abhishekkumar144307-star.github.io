@@ -1,12 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Release</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+color:white;
+}
+
+#lockScreen,#videoScreen{
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+#lockScreen{
+background:linear-gradient(135deg,#000,#111,#222);
+}
+
+#lockScreen h1{
+font-size:32px;
+margin-bottom:15px;
+}
+
+#lockScreen p{
+font-size:18px;
+color:#bbb;
+}
+
+video{
+width:100%;
+height:100%;
+object-fit:contain;
+background:#000;
+}
+</style>
+
+</head>
 <body>
 
-<h1>My Video</h1>
+<div id="lockScreen">
+<h1>🔒 Video Locked</h1>
+<p>Video will be available after release time.</p>
+</div>
 
-<video width="100%" controls>
-  <source src="Screenrecorder-2026-07-09-12-22-20-709.mp4" type="video/mp4">
+<div id="videoScreen" style="display:none;">
+<video id="myVideo" controls autoplay>
+<source src="Screenrecorder-2026-07-09-12-22-20-709.mp4" type="video/mp4">
 </video>
+</div>
+
+<script>
+
+// ===== CHANGE RELEASE DATE/TIME HERE =====
+const releaseDate = new Date("2026-07-15T20:00:00+05:30");
+
+function checkRelease(){
+
+const now = new Date();
+
+if(now >= releaseDate){
+
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("videoScreen").style.display="flex";
+
+}else{
+
+document.getElementById("lockScreen").style.display="flex";
+document.getElementById("videoScreen").style.display="none";
+
+}
+
+}
+
+checkRelease();
+setInterval(checkRelease,1000);
+
+// Basic protection
+document.addEventListener("contextmenu",e=>e.preventDefault());
+
+document.onkeydown=function(e){
+
+if(e.keyCode==123)return false;
+
+if(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase()))return false;
+
+if(e.ctrlKey&&["U","S"].includes(e.key.toUpperCase()))return false;
+
+};
+
+</script>
 
 </body>
 </html>
